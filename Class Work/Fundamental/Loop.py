@@ -74,10 +74,11 @@ values = range(1, 5)
 
 # The continue Statement
 
-# for num in range(1, 6):
-#     if num == 3:
-#         continue
-#     print(num)
+#for num in range(1, 10):
+#    if num == 5 or num==8:
+#       break
+#    print(num)
+
 
 # Python pass Statement
 # In Python, pass is a null statement and it does nothing when executed. 
