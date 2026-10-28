@@ -1,34 +1,46 @@
 
-# 1) 
+# # 1) 
 
 
-while True:
+# while True:
 
-    menu = """
-        Press 1 for Insert Data list
-        Press 2 for Fetch All Data list
-        Press 3 for Fetch Single Data by index list
-        Press 4 for Update Data
-        Press 5 for Delete Data
-        Press 6 for Exit
-        """
+#     menu = """
+#         Press 1 for Insert Data list
+#         Press 2 for Fetch All Data list
+#         Press 3 for Fetch Single Data by index list
+#         Press 4 for Update Data
+#         Press 5 for Delete Data
+#         Press 6 for Exit
+#         """
 
-    print(menu)
+#     print(menu)
 
 
-    students=["Raj","nagar"]
-    print(students)
+#     students=["Raj","nagar"]
+#     print(students)
 
-    number =int(input("Enter any Number : "))
-    if number==1:
-        name=str(input("Enter any Name : "))
-        students.append(name)
-    elif number==2:
-        students.pop()
-    elif number==3:
-        index=int(input("Enter any index of list : "))
-        updated_list=str(input("Enter any Name : "))
-        students[index]=updated_list
-    else:
-        print("Invalid Number")
-    print(f'Updated list : {students}')  
+#     number =int(input("Enter any Number : "))
+#     if number==1:
+#         name=str(input("Enter any Name : "))
+#         students.append(name)
+#     elif number==2:
+#         students.pop()
+#     elif number==3:
+#         index=int(input("Enter any index of list : "))
+#         updated_list=str(input("Enter any Name : "))
+#         students[index]=updated_list
+#     else:
+#         print("Invalid Number")
+#     print(f'Updated list : {students}')  
+
+
+
+
+# Task 1: add 100 data inside a list using append function
+
+my_list = []
+
+for i in range(1 , 101):
+    my_list.append(i)
+print("List:", my_list)
+print("Total items:", len(my_list))

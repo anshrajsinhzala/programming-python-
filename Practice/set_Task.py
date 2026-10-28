@@ -1,5 +1,5 @@
 my_set = {10 , 20 , 30 , 40 }
-print("Method: 1) Add 2)update 3)clear 4)Delete 5)length 6)Exit ")
+print("Menu: 1) Add 2)update 3)clear 4)Delete 5)length 6)Exit ")
 method = int(input("Select Method: "))
 if method == 1:
     value = (input("Enter value: "))

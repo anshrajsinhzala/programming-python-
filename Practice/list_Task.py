@@ -53,7 +53,7 @@ my_list=[10 , 20 , 30 , 40 ]
 #     print("Invalid Number")
 
 while True:
-    print("Method: 1) Add(insert) 2)Delete(remove) 3)clear 4)Delete 5)length 6)Exit ")
+    print("Menu: 1) Add(insert) 2)Delete(remove) 3)clear 4)Delete 5)length 6)Exit ")
     method = int(input("Select Method: "))
     if method == 1:
         value = input("Enter value: ")

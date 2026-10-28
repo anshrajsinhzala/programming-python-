@@ -15,7 +15,7 @@ num3 = 8+2j
 print(num3, 'is of type', type(num3)) # (8+2j) is of type <class 'complex'>
 
 
-#Type Conversion in Python
+#Type Conversion in Python          int()  float()  complex()
 
 # num1 = int(2.3)
 # print(num1)  # prints 2
@@ -43,7 +43,7 @@ Random / Math Module :
 
 """
 
-
+# import random
 # print(random.randrange(10, 20))  #15
 
 # list1 = ['a', 'b', 'c', 'd', 'e']
