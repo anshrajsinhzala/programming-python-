@@ -1,0 +1,13 @@
+# 4.Write a Python program that asks the user to enter their IPL fantasy team points and uses nested if-else statements to print:
+# 'Champion' if points > 800, 'Top Performer' if points between 500 and 800, 'Keep Trying' otherwise.<br><br><em><strong>Hint:</strong>
+# Use nested if-else blocks to check the ranges.</em>.
+
+team_points = int(input("Enter fantasy IPL team points: "))
+
+if team_points > 800:
+    print("champion")
+else:
+    if team_points >= 500:
+        print("Top Performer")
+    else:
+        print("Keep Trying")

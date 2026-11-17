@@ -1,0 +1,559 @@
+/* ==========================================================================
+   Modern Calculator Stylesheet
+   Pure CSS3 with CSS Custom Properties (Theme Variables) & CSS Grid
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   1. Theme Color Variables & Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Theme (Default) */
+body.dark-theme {
+    --bg-page: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 100%);
+    --calc-bg: rgba(30, 41, 59, 0.75);
+    --calc-border: rgba(255, 255, 255, 0.08);
+    --calc-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.1);
+
+    --display-bg: rgba(15, 23, 42, 0.85);
+    --display-border: rgba(255, 255, 255, 0.05);
+    --text-main: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-error: #f87171;
+    --btn-num-bg: rgba(51, 65, 85, 0.7);
+    --btn-num-hover: rgba(71, 85, 105, 0.9);
+    --btn-num-text: #f1f5f9;
+    --btn-action-bg: rgba(71, 85, 105, 0.5);
+    --btn-action-hover: rgba(100, 116, 139, 0.8);
+    --btn-action-text: #38bdf8;
+    --btn-op-bg: #4f46e5;
+    --btn-op-hover: #4338ca;
+    --btn-op-text: #ffffff;
+    --btn-op-glow: rgba(99, 102, 241, 0.4);
+    --btn-equals-bg: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+    --btn-equals-hover: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #4f46e5 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-glow: rgba(59, 130, 246, 0.5);
+    --history-bg: rgba(15, 23, 42, 0.95);
+    --history-item-hover: rgba(51, 65, 85, 0.5);
+    --history-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Light Theme */
+body.light-theme {
+    --bg-page: radial-gradient(circle at 50% 20%, #f1f5f9 0%, #cbd5e1 100%);
+    --calc-bg: rgba(255, 255, 255, 0.85);
+    --calc-border: rgba(0, 0, 0, 0.08);
+    --calc-shadow: 0 20px 45px -10px rgba(100, 116, 139, 0.35), 0 0 30px rgba(59, 130, 246, 0.1);
+    --display-bg: #f8fafc;
+    --display-border: rgba(0, 0, 0, 0.06);
+    --text-main: #0f172a;
+    --text-secondary: #64748b;
+    --text-error: #dc2626;
+    --btn-num-bg: #f8fafc;
+    --btn-num-hover: #e2e8f0;
+    --btn-num-text: #0f172a;
+    --btn-action-bg: #e2e8f0;
+    --btn-action-hover: #cbd5e1;
+    --btn-action-text: #0284c7;
+    --btn-op-bg: #4f46e5;
+    --btn-op-hover: #4338ca;
+    --btn-op-text: #ffffff;
+    --btn-op-glow: rgba(99, 102, 241, 0.25);
+    --btn-equals-bg: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+    --btn-equals-hover: linear-gradient(135deg, #0369a1 0%, #1d4ed8 100%);
+    --btn-equals-text: #ffffff;
+    --btn-equals-glow: rgba(37, 99, 235, 0.35);
+    --history-bg: rgba(255, 255, 255, 0.98);
+    --history-item-hover: rgba(241, 245, 249, 1);
+    --history-border: rgba(0, 0, 0, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Reset & Base Setup
+   -------------------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-x: hidden;
+    transition: background var(--transition-normal);
+}
+
+.calculator-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. Calculator Chassis / Card Container
+   -------------------------------------------------------------------------- */
+.calculator {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    background: var(--calc-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--calc-border);
+    border-radius: 32px;
+    padding: 24px;
+    box-shadow: var(--calc-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+    transition: background var(--transition-normal), border var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* --------------------------------------------------------------------------
+   4. Header Bar (Title & Mode Controls)
+   -------------------------------------------------------------------------- */
+.calc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+}
+
+.calc-title {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.icon-btn:hover {
+    background: var(--btn-action-bg);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+.icon-btn:active {
+    transform: scale(0.92);
+}
+
+/* Theme Icon Visibility Switch */
+body.dark-theme .moon-icon {
+    display: none;
+}
+
+body.dark-theme .sun-icon {
+    display: block;
+}
+
+body.light-theme .sun-icon {
+    display: none;
+}
+
+body.light-theme .moon-icon {
+    display: block;
+}
+
+/* --------------------------------------------------------------------------
+   5. History Overlay Panel
+   -------------------------------------------------------------------------- */
+.history-panel {
+    position: absolute;
+    top: 64px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background: var(--history-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid var(--history-border);
+    padding: 20px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px) scale(0.97);
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+.history-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--history-border);
+}
+
+.history-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.clear-history-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background var(--transition-fast);
+}
+
+.clear-history-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 4px;
+}
+
+/* Custom Scrollbar for History */
+.history-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 4px;
+    opacity: 0.4;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 40px;
+}
+
+.history-item {
+    background: var(--display-bg);
+    border: 1px solid var(--display-border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.history-item:hover {
+    background: var(--history-item-hover);
+    transform: translateX(-2px);
+}
+
+.history-expression {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+.history-result {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   6. Display Screen
+   -------------------------------------------------------------------------- */
+.display-container {
+    background: var(--display-bg);
+    border: 1px solid var(--display-border);
+    border-radius: 20px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    min-height: 100px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background var(--transition-normal), border var(--transition-normal);
+    word-break: break-all;
+    overflow: hidden;
+}
+
+.previous-operand {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    min-height: 22px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-align: right;
+    opacity: 0.85;
+    transition: color var(--transition-normal);
+}
+
+.current-operand {
+    color: var(--text-main);
+    font-size: 2.3rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: right;
+    transition: color var(--transition-normal), font-size var(--transition-fast);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.current-operand::-webkit-scrollbar {
+    display: none;
+}
+
+.current-operand.error-state {
+    color: var(--text-error);
+    font-size: 1.25rem;
+    white-space: normal;
+    text-align: right;
+}
+
+/* Shake animation on invalid input */
+.display-container.shake {
+    animation: shakeAnimation 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shakeAnimation {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-3px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(3px, 0, 0);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   7. Keypad (CSS Grid Layout)
+   -------------------------------------------------------------------------- */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* Button Base Styles */
+.btn {
+    position: relative;
+    height: 60px;
+    border-radius: 18px;
+    border: 1px solid transparent;
+    font-family: var(--font-family);
+    font-size: 1.35rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn:active,
+.btn.active-press {
+    transform: scale(0.92);
+}
+
+/* Number Buttons */
+.btn-number {
+    background: var(--btn-num-bg);
+    color: var(--btn-num-text);
+    border-color: rgba(255, 255, 255, 0.04);
+}
+
+.btn-number:hover {
+    background: var(--btn-num-hover);
+    transform: translateY(-2px);
+}
+
+.btn-number:active,
+.btn-number.active-press {
+    transform: scale(0.92);
+}
+
+/* Action Buttons (AC, DEL, %, ±) */
+.btn-action {
+    background: var(--btn-action-bg);
+    color: var(--btn-action-text);
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.btn-action:hover {
+    background: var(--btn-action-hover);
+    transform: translateY(-2px);
+}
+
+.btn-action:active,
+.btn-action.active-press {
+    transform: scale(0.92);
+}
+
+.btn-action[data-action="clear"] {
+    color: #f87171;
+}
+
+/* Operator Buttons (+, -, ×, ÷) */
+.btn-operator {
+    background: var(--btn-op-bg);
+    color: var(--btn-op-text);
+    font-size: 1.45rem;
+    font-weight: 600;
+}
+
+.btn-operator:hover {
+    background: var(--btn-op-hover);
+    box-shadow: 0 4px 15px var(--btn-op-glow);
+    transform: translateY(-2px);
+}
+
+.btn-operator.operator-active {
+    filter: brightness(1.25);
+    box-shadow: 0 0 12px var(--btn-op-glow);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Equals Button (=) */
+.btn-equals {
+    background: var(--btn-equals-bg);
+    color: var(--btn-equals-text);
+    font-size: 1.6rem;
+    font-weight: 600;
+    box-shadow: 0 4px 14px var(--btn-equals-glow);
+}
+
+.btn-equals:hover {
+    background: var(--btn-equals-hover);
+    box-shadow: 0 6px 20px var(--btn-equals-glow);
+    transform: translateY(-2px);
+}
+
+.btn-equals:active,
+.btn-equals.active-press {
+    transform: scale(0.92);
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsive Design (Mobile & Small Screens)
+   -------------------------------------------------------------------------- */
+@media (max-width: 440px) {
+    body {
+        padding: 10px;
+    }
+
+    .calculator {
+        max-width: 100%;
+        padding: 18px 16px;
+        border-radius: 24px;
+        gap: 14px;
+    }
+
+    .keypad {
+        gap: 8px;
+    }
+
+    .btn {
+        height: 54px;
+        border-radius: 14px;
+        font-size: 1.2rem;
+    }
+
+    .current-operand {
+        font-size: 1.9rem;
+    }
+
+    .previous-operand {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .calculator {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .display-container {
+        min-height: 70px;
+        padding: 10px 14px;
+    }
+
+    .btn {
+        height: 44px;
+        border-radius: 12px;
+    }
+}

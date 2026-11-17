@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+    <!-- Main Container -->
+    <main class="calculator-container">
+
+        <!-- Calculator Card -->
+        <div class="calculator" id="calculator">
+
+            <!-- Top Bar: App Title and Quick Action Controls -->
+            <header class="calc-header">
+                <span class="calc-title">CALCULATOR</span>
+                <div class="header-actions">
+                    <!-- History Toggle Button -->
+                    <button id="history-toggle-btn" class="icon-btn" title="View History"
+                        aria-label="View Calculation History">
+                        <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </button>
+
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme"
+                        aria-label="Toggle Light/Dark Theme">
+                        <!-- Sun Icon (for dark mode) -->
+                        <svg class="icon sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <!-- Moon Icon (for light mode) -->
+                        <svg class="icon moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            <!-- History Panel (Slides out / toggles) -->
+            <section id="history-panel" class="history-panel" aria-hidden="true">
+                <div class="history-header">
+                    <h3>History</h3>
+                    <button id="clear-history-btn" class="clear-history-btn" title="Clear History">Clear</button>
+                </div>
+                <div id="history-list" class="history-list">
+                    <p class="history-empty">No calculations yet</p>
+                </div>
+            </section>
+            <!-- Calculator Display Screen -->
+            <section class="display-container" aria-live="polite">
+                <!-- Shows previous operand & operator, e.g. "125 × 4" -->
+                <div class="previous-operand" id="previous-operand"></div>
+                <!-- Shows current input or computed result -->
+                <div class="current-operand" id="current-operand">0</div>
+            </section>
+            <!-- Calculator Keypad (CSS Grid) -->
+            <div class="keypad">
+                <!-- Row 1: Clear, Delete, Percentage, Divide -->
+                <button type="button" class="btn btn-action" data-action="clear" data-key="Escape"
+                    title="Clear All (Esc)">AC</button>
+                <button type="button" class="btn btn-action" data-action="delete" data-key="Backspace"
+                    title="Delete Last Digit (Backspace)">DEL</button>
+                <button type="button" class="btn btn-action" data-action="percent" data-key="%"
+                    title="Percentage (%)">%</button>
+                <button type="button" class="btn btn-operator" data-operator="/" data-key="/"
+                    title="Divide (/)">÷</button>
+                <!-- Row 2: 7, 8, 9, Multiply -->
+                <button type="button" class="btn btn-number" data-number="7" data-key="7">7</button>
+                <button type="button" class="btn btn-number" data-number="8" data-key="8">8</button>
+                <button type="button" class="btn btn-number" data-number="9" data-key="9">9</button>
+                <button type="button" class="btn btn-operator" data-operator="*" data-key="*"
+                    title="Multiply (*)">×</button>
+                <!-- Row 3: 4, 5, 6, Subtract -->
+                <button type="button" class="btn btn-number" data-number="4" data-key="4">4</button>
+                <button type="button" class="btn btn-number" data-number="5" data-key="5">5</button>
+                <button type="button" class="btn btn-number" data-number="6" data-key="6">6</button>
+                <button type="button" class="btn btn-operator" data-operator="-" data-key="-"
+                    title="Subtract (-)">−</button>
+                <!-- Row 4: 1, 2, 3, Add -->
+                <button type="button" class="btn btn-number" data-number="1" data-key="1">1</button>
+                <button type="button" class="btn btn-number" data-number="2" data-key="2">2</button>
+                <button type="button" class="btn btn-number" data-number="3" data-key="3">3</button>
+                <button type="button" class="btn btn-operator" data-operator="+" data-key="+" title="Add (+)">+</button>
+                <!-- Row 5: Negate (+/-), 0, Decimal (.), Equals (=) -->
+                <button type="button" class="btn btn-action" data-action="negate" data-key="±"
+                    title="Plus / Minus (±)">±</button>
+                <button type="button" class="btn btn-number" data-number="0" data-key="0">0</button>
+                <button type="button" class="btn btn-number" data-action="decimal" data-key="."
+                    title="Decimal point (.)">.</button>
+                <button type="button" class="btn btn-equals" data-action="calculate" data-key="Enter"
+                    title="Calculate (Enter or =)">=</button>
+            </div>
+        </div>
+    </main>
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+
+</html>
